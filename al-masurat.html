@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Masurat</title>
+    <link rel="stylesheet" href="src/output.css" />
+</head>
+<body>
+  
+        <header class="flex justify-center align-middle" >
+            <div class=" w-120 max-w-xl bg-white/30 backdrop-blur-md border border-white/20 shadow-lg rounded-full px-6 py-3 flex justify-between items-center">
+  <span class="font-semibold text-gray-800">al-Ma’tsurah</span>
+  <nav class="flex gap-4 text-gray-700">
+    <a href="index.html" class="hover:text-blue-500">Home</a>
+    <a href="#" class="hover:text-blue-500">Doa</a>
+    <a href="#" class="hover:text-blue-500">Bantuan</a>
+  </nav>
+  </div>
+</header>
+
+<section class="flex flex-col p-10">
+    <span>
+    <p class="font-extralight text-3xl text-center">Al-Ma'surat</p>
+    <p class="font-mono text-gray-400 text-center">Pilih dzikir pagi atau petang </p>
+    </span>
+    <div class="flex flex-col justify-center md:flex-row  p-4 gap-5">
+
+       <button class="relative w-80 h-32 rounded-3xl overflow-hidden shadow-lg group">
+  <img 
+    src="img/pagi.png" 
+    alt="background" 
+    class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+  <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300"></div>
+  <div class="relative z-10 flex items-center justify-center h-full">
+    <a href="DzikirPagi.html" class="text-white text-lg font-semibold drop-shadow-md">Dzikir Pagi</a>
+  </div>
+</button>
+  <button class="relative w-80 h-32 rounded-3xl overflow-hidden shadow-lg group">
+  <img 
+    src="img/malam.png" 
+    alt="background" 
+    class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+  <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300"></div>
+  <div class="relative z-10 flex items-center justify-center h-full">
+    <a href="DzikirPagi.html" class="text-white text-lg font-semibold drop-shadow-md">Dzikir petang</a>
+  </div>
+</button>
+    </div>
+
+<article class="flex flex-col items-center bg-amber-50 px-6 py-10 rounded-3xl shadow-md max-w-3xl mx-auto">
+  <h2 class="text-3xl font-semibold text-amber-900 mb-4">Tentang Al-Ma’tsurat</h2>
+  <p class="text-center text-gray-700 leading-relaxed">
+    <strong>Al-Ma’tsurat</strong> adalah kumpulan <em>dzikir pagi dan petang</em> yang diajarkan langsung oleh 
+    Rasulullah ﷺ. Amalan ini telah menjadi warisan mulia yang dijaga dan diamalkan oleh para sahabat, 
+    tabi’in, serta ulama salaf dari generasi ke generasi.
+  </p>
+  <p class="text-center text-gray-700 leading-relaxed mt-4">
+    Dzikir-dzikir di dalamnya bersumber dari <em>hadits-hadits shahih</em> yang mengajarkan cara seorang muslim 
+    untuk selalu mengingat Allah ﷻ di awal dan akhir hari—sebagai pelindung, penenang hati, dan 
+    penguat iman dalam menjalani kehidupan.
+  </p>
+</article>
+<blockquote class="mt-6 italic text-center text-amber-800 border-l-4 border-amber-400 ">
+  “Barang siapa membaca dzikir pagi dan petang, maka Allah akan mencukupkannya dari segala sesuatu.” 
+  <br><span class="text-sm text-amber-700">— HR. Abu Dawud</span>
+</blockquote>
+</section>
+
+<footer class="mt-16 bg-amber-100  border-amber-200 py-8 w-full text-center text-gray-700">
+  <h3 class="text-lg font-semibold text-amber-900 mb-2">Al-Ma’tsurat</h3>
+  <p class="max-w-xl mx-auto text-sm leading-relaxed">
+    Kumpulan dzikir pagi dan petang yang bersumber dari hadits-hadits shahih,  
+    sebagai pengingat untuk selalu dekat dengan Allah ﷻ di setiap waktu.
+  </p>
+
+  <div class="flex justify-center gap-6 mt-6 text-amber-700">
+    <a href="index.html" class="hover:text-amber-900 transition">Beranda</a>
+    <a href="#tentang" class="hover:text-amber-900 transition">Tentang</a>
+    <a href="DzikirPagi.html" class="hover:text-amber-900 transition">Dzikir Pagi</a>
+    <a href="#petang" class="hover:text-amber-900 transition">Dzikir Petang</a>
+  </div>
+
+  <div class="mt-6 text-xs text-amber-800">
+    © <span id="year"></span> Al-Ma’tsurat Project • Dibuat dengan <span class="text-red-500">❤</span> untuk pengingat dzikir harian
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</footer>
+
+
+  
+    
+</body>
+</html>

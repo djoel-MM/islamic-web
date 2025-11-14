@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./src/output.css " rel="stylesheet">
+</head>
+<style>
+  #jumlah {
+    font-size: 40px;
+    color: green;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    width: 100px;
+    margin: auto;
+  }
+</style>
+<style>
+  .float-text {
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #059669; /* emerald-600 */
+    opacity: 1;
+    animation: fadeUp 1s ease-out forwards;
+  }
+
+  @keyframes fadeUp {
+    0% { 
+      opacity: 1;
+      transform: translateY(0); 
+    }
+    100% { 
+      opacity: 0;
+      transform: translateY(-40px); 
+    }
+  }
+</style>
+
+
+<body class="flex items-center justify-center flex-col p-5">
+
+     <header class="p-10">
+  <div class="w-100 max-w-sm bg-white/30 backdrop-blur-md border border-white/20 shadow-lg rounded-full px-6 py-3 flex justify-between items-center">
+    <span class="font-semibold text-gray-800">Dzikir</span>
+    <a href="index.html" class="bg-green-600 flex items-center px-5 w-max h-9 rounded-2xl hover:bg-green-700">
+      <p class="text-white font-bold">Back</p>
+    </a>
+  </div>
+</header>
+  <p class="font-bold text-3xl text-emerald-600">Tasbih Digital</p>
+<p class="font-mono text-gray-600">Hitung Dzikir anda dengan Mudah</p>
+
+<section class="flex items-center flex-col gap-5 relative">
+
+  <div class="flex flex-col items-center bg-white w-60 h-30 shadow-md rounded-2xl py-4">
+      <p id="jumlah" class="text-4xl font-bold text-emerald-600">0</p>
+  </div>
+
+  <!-- tempat muncul animasi pujian -->
+  <div id="anim-container" class="absolute top-20"></div>
+
+  <button onclick="tambah()" 
+          class="bg-green-500 hover:bg-green-600 active:scale-95 transition-all duration-300 
+                 w-40 h-40 rounded-full flex justify-center items-center shadow-lg">
+      <span class="text-white font-semibold text-lg">Hitung</span>
+  </button>
+
+  <button id="Reset" class="text-gray-500 font-mono">Reset</button>
+</section>
+<script>
+  const hasil = document.getElementById('jumlah');
+  const animContainer = document.getElementById('anim-container');
+  const Reset = document.getElementById('Reset');
+
+  let count = 0;
+
+  const kataPujian = [
+    "lagi- lagi",
+    "Sholihnya",
+    "Alliimnya",
+    "Barakallah",
+    "MasyaAllah Tabarakallah",
+    "999+ aura",
+    "Alhamdulillah",
+    "lanjutkan"
+  ];
+
+  function tambah() {
+    count++;
+    hasil.innerText = count;
+
+    
+    const randomWord = kataPujian[Math.floor(Math.random() * kataPujian.length)];
+
+   
+    const floatText = document.createElement('div');
+    floatText.className = "float-text";
+    floatText.innerText = randomWord;
+
+    
+    floatText.style.left = (20 + Math.random() * 90) + "px";
+
+    
+    animContainer.appendChild(floatText);
+
+   
+    setTimeout(() => {
+      floatText.remove();
+    }, 900);
+  }
+
+  Reset.addEventListener("click", () => {
+    count = 0;
+    hasil.innerText = 0;
+  });
+</script>
+
+
+</body>
+</html>

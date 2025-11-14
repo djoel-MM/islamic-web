@@ -1,47 +1,250 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detail Kajian</title>
-  <link href="./src/output.css" rel="stylesheet">
-</head>
-<body class="bg-linear-to-br from-amber-50 to-white min-h-screen flex flex-col items-center py-10">
 
-  <div id="content" class="bg-white/80 rounded-3xl shadow-xl p-6 w-96 flex flex-col items-center text-center">
-    <h1 class="text-2xl font-bold text-amber-600 mb-4">Detail Kajian</h1>
-    <img id="poster" src="" alt="Poster Kajian" class="w-full h-60 object-cover rounded-xl mb-4 shadow-md">
-    <h2 id="judul" class="text-xl font-semibold text-gray-800 mb-2"></h2>
-    <p id="lokasi" class="text-sm text-gray-600 mb-1"></p>
-    <p id="waktu" class="text-sm text-gray-500 mb-3"></p>
-    <p id="deskripsi" class="text-gray-700 text-sm mb-4 px-2"></p>
-    <p id="kontak" class="text-gray-500 text-sm italic mb-6"></p>
-    <a href="index.html" class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600">Kembali</a>
-  </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Kajian</title>
+  <link rel="stylesheet" href="src/output.css" />
+</head>
+
+<body class="bg-amber-50 min-h-screen">
+  <section class="max-w-6xl mx-auto p-8">
+
+    <h1 class="text-3xl font-bold text-amber-600 mb-8 text-center">
+      Detail Kajian
+    </h1>
+
+
+
+    <div class="flex justify-around md:flex-row bg-white shadow-2xl rounded-3xl overflow-hidden">
+      <div class="md:w-1/2 bg-amber-50 overflow-hidden rounded-3xl aspect-4/3">
+        <img id="poster" class="w-full h-full object-contain" />
+      </div>
+
+
+
+
+      <div class="md:w-1/2 p-6 flex flex-col justify-between">
+        <div>
+          <h2 id="judul" class="text-2xl font-semibold text-gray-800 mb-3">
+
+          </h2>
+          <p id="lokasi" class="text-sm text-gray-600 mb-1">
+
+          </p>
+          <p id="waktu" class="text-sm text-gray-500 mb-3">
+
+          </p>
+          <p id="deskripsi" class="text-gray-700 text-sm mb-4">
+
+          </p>
+          <p id="kontak" class="text-gray-500 text-sm italic mb-6">
+
+          </p>
+        </div>
+        <a href="index.html"
+          class="bg-amber-500 text-white px-5 py-2 rounded-lg w-max hover:bg-amber-600 transition flex justify-center">
+          ← Kembali
+        </a>
+      </div>
+    </div>
+
+
+    <div class="mt-12">
+      <h3 class="text-xl font-semibold text-gray-800 mb-6 text-center">
+        Kajian Lainnya
+      </h3>
+      <div id="posterLain" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      </div>
+    </div>
+  </section>
+
+
+
+
+
 
   <script>
-    // Ambil ID dari URL
-    const params = new URLSearchParams(window.location.search);
-    const id = parseInt(params.get("id"));
+    document.addEventListener("DOMContentLoaded", () => {
+      // Ambil parameter ID dari URL
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      if (!id) return alert("ID tidak ditemukan!");
 
-    // Ambil data dari localStorage
-    const dataKajian = JSON.parse(localStorage.getItem("kajianList")) || [];
-    const kajian = dataKajian.find(k => k.id === id);
+      // Ambil semua data kajian dari localStorage
+      const dataKajian = JSON.parse(localStorage.getItem("kajianList")) || [];
 
-    if (kajian) {
+      // Cari kajian dengan ID yang cocok
+      const kajian = dataKajian.find(k => k.id == id);
+      if (!kajian) return alert("Kajian tidak ditemukan!");
+
+      // Masukkan datanya ke halaman
       document.getElementById("poster").src = kajian.poster_url;
       document.getElementById("judul").textContent = kajian.judul;
-      document.getElementById("lokasi").textContent = "📍 " + kajian.lokasi;
-      document.getElementById("waktu").textContent = "🕓 " + new Date(kajian.waktu).toLocaleString();
+      document.getElementById("lokasi").textContent = `📍 ${kajian.lokasi}`;
+      document.getElementById("waktu").textContent = `🕓 ${new Date(kajian.waktu).toLocaleString()}`;
       document.getElementById("deskripsi").textContent = kajian.deskripsi;
-      document.getElementById("kontak").textContent = "📞 " + kajian.kontak;
-    } else {
-      document.getElementById("content").innerHTML = `
-        <p class="text-gray-600 text-center">Kajian tidak ditemukan.</p>
-        <a href="index.html" class="mt-4 inline-block bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600">Kembali</a>
+      document.getElementById("kontak").textContent = `📞 ${kajian.kontak}`;
+
+      // === Kajian Lainnya ===
+      const posterLain = document.getElementById("posterLain");
+      dataKajian
+        .filter(k => k.id != id) // selain yang sedang dibuka
+        .slice(0, 3) // maksimal 3
+        .forEach(k => {
+          const div = document.createElement("div");
+          div.className = "bg-white shadow-lg rounded-2xl overflow-hidden hover:shadow-2xl transition";
+          div.innerHTML = `
+        <img src="${k.poster_url}" alt="${k.judul}"   class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h4 class="text-base font-semibold text-gray-800 mb-2">${k.judul}</h4>
+          <a href="detail.html?id=${k.id}" class="text-amber-600 text-sm font-medium hover:underline">Lihat Detail →</a>
+        </div>
       `;
-    }
+          posterLain.appendChild(div);
+        });
+    });
   </script>
 
 </body>
+
 </html>
+
+
+
+
+    <section class="w-full max-w-6xl mx-auto p-2">
+        <h1 class="text-3xl font-bold text-amber-600 mb-8 text-center">Jadwal Kajian Dakwah</h1>
+
+        <div class="flex gap-6 overflow-x-auto flex-nowrap  py-4 scrollbar-thin scrollbar-thumb-amber-100 scrollbar-track-amber-100"
+            id="kajianWrapper">
+            <!-- Tombol tambah (selalu muncul di awal) -->
+            <div id="openModalBtn"
+                class="cursor-pointer bg-white/80 backdrop-blur-md border border-amber-100 shadow-lg hover:shadow-2xl rounded-3xl w-64 p-5 flex-shrink-0 flex flex-col items-center transition-all duration-300 hover:scale-105">
+                <div class="bg-amber-100 rounded-full p-4 mb-4">
+                    <img src="img/istockphoto-1034906324-612x612-removebg-preview.png" alt="icon"
+                        class="w-16 h-16 object-contain" />
+                </div>
+                <h2 class="text-lg font-semibold text-gray-800 mb-1 text-center">
+                    Infokan Kajianmu
+                </h2>
+                <p class="text-sm text-gray-500 text-center">
+                    Sebarkan kebaikan dengan memposting poster kajian.
+                </p>
+            </div>
+
+            <!-- TEMPAT CARD KAJIAN -->
+            <div id="kajianContainer" class="flex gap-6 flex-nowrap"></div>
+        </div>
+
+        <!-- MODAL -->
+        <div id="modal" class="fixed inset-0 bg-black/40 backdrop-blur-md hidden flex justify-center items-center z-50">
+            <div class="bg-white rounded-3xl shadow-2xl w-96 p-6 animate-[fadeIn_0.3s_ease]">
+                <h2 class="text-xl font-semibold text-center text-amber-600 mb-4">
+                    Tambah Kajian Baru
+                </h2>
+                <form id="kajianForm" class="flex flex-col gap-3">
+                    <input type="file" id="poster" accept="image/*" class="border rounded-lg p-2" required />
+                    <input type="text" id="judul" placeholder="Judul Kajian" class="border rounded-lg p-2" required />
+                    <input type="text" id="lokasi" placeholder="Lokasi Kajian" class="border rounded-lg p-2" required />
+                    <input type="datetime-local" id="waktu" class="border rounded-lg p-2" required />
+                    <textarea id="deskripsi" placeholder="Deskripsi singkat kajian..." class="border rounded-lg p-2"
+                        required></textarea>
+                    <input type="text" id="kontak" placeholder="No Penanggung Jawab" class="border rounded-lg p-2"
+                        required />
+                    <div class="flex justify-end gap-3 mt-3">
+                        <button type="button" id="closeModalBtn"
+                            class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
+                            Batal
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition">
+                            Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+
+    <script>
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+        const modal = document.getElementById("modal");
+        const form = document.getElementById("kajianForm");
+        const container = document.getElementById("kajianContainer");
+
+        // === Buka & Tutup Modal ===
+        openModalBtn.onclick = () => modal.classList.remove("hidden");
+        closeModalBtn.onclick = () => modal.classList.add("hidden");
+
+        // === Ambil data dari LocalStorage ===
+        window.addEventListener("DOMContentLoaded", () => {
+            const dataKajian = JSON.parse(localStorage.getItem("kajianList")) || [];
+            dataKajian.forEach(addKajianCard);
+        });
+
+        // === Simpan data baru ===
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const posterFile = document.getElementById("poster").files[0];
+            if (!posterFile) return alert("Pilih poster dulu!");
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                const posterBase64 = reader.result;
+
+                const newKajian = {
+                    id: Date.now(),
+                    judul: form.judul.value,
+                    lokasi: form.lokasi.value,
+                    waktu: form.waktu.value,
+                    kontak: form.kontak.value,
+                    deskripsi: form.deskripsi.value,
+                    poster_url: posterBase64
+                };
+
+                const dataKajian = JSON.parse(localStorage.getItem("kajianList")) || [];
+                dataKajian.unshift(newKajian);
+                localStorage.setItem("kajianList", JSON.stringify(dataKajian));
+
+                addKajianCard(newKajian);
+                form.reset();
+                modal.classList.add("hidden");
+            };
+            reader.readAsDataURL(posterFile);
+        });
+
+        // === Tambah card ke tampilan ===
+        function addKajianCard(k) {
+            const el = document.createElement("div");
+            el.className = "bg-white/80 border border-amber-100 rounded-3xl shadow-lg hover:shadow-2xl w-64 overflow-hidden transition hover:-translate-y-1";
+            el.innerHTML = `
+        <img src="${k.poster_url}" class="w-full h-40 object-cover" alt="Poster">
+        <div class="p-4 flex flex-col">
+          <h3 class="font-semibold text-gray-800 text-lg mb-1">${k.judul}</h3>
+          <p class="text-sm text-gray-500 mb-2">${k.lokasi}</p>
+          <p class="text-xs text-gray-400 mb-3">${new Date(k.waktu).toLocaleString()}</p>
+          <a href="detail.html?id=${k.id}" class="block text-center bg-amber-500 text-white py-2 rounded-lg hover:bg-amber-600">Lihat Detail</a>
+        </div>
+      `;
+            container.appendChild(el);
+        }
+    </script>
