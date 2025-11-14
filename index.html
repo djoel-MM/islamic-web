@@ -9,175 +9,8 @@
 </head>
 
 <body>
-    <header class="relative w-full h-150 bg-cover bg-center flex-none p-2" id="background">
 
-        <nav class="flex justify-center">
-            <div class="  flex justify-center gap-8 p-6">
-                <a href="#" class="text-white font-semibold text-lg hover:text-yellow-200 transition">Home</a>
-                <a href="#" class="text-white font-semibold text-lg hover:text-yellow-200 transition">Daftar</a>
-                <a href="#" class="text-white font-semibold text-lg hover:text-yellow-200 transition">Bantuan</a>
-            </div>
-            <div>
-                <button>
-                    <img src="img/heart-regular-full.svg">
-                </button>
-            </div>
-        </nav>
-        <div class="flex justify-between">
-            <div class=" z-10  bg-white/20 py-4 rounded-2xl shadow-lg backdrop-blur-md w-110 flex flex-col ">
-                <span id="current-time" class="text-8xl font-light text-center  ">. : : </span>
-                <article class="font-medium text-4xl text-center">jadwal :</article>
-                <ul class="font-extralight text-3xl text-center">
-                    <li id="shecedule"></li>
-                </ul>
-
-            </div>
-
-            <script>
-
-                function updateTimeAndBackground() {
-                    const now = new Date();
-                    const hour = now.getHours();
-
-                    // update waktu
-                    const hours = String(hour).padStart(2, '0');
-                    const minutes = String(now.getMinutes()).padStart(2, '0');
-                    const seconds = String(now.getSeconds()).padStart(2, '0');
-                    document.getElementById("current-time").textContent = `${hours}:${minutes}:${seconds}`;
-
-                    // ambil elemen header
-                    const header = document.getElementById("background");
-                    const schedule = document.getElementById("shecedule");
-
-                    // ganti background + teks sesuai waktu
-                    if (hour >= 4 && hour < 6) {
-                        header.style.backgroundImage = "url('img/pagi.png')";
-                        schedule.textContent = " Dzikir Pagi";
-                    } else if (hour >= 6 && hour < 12) {
-                        header.style.backgroundImage = "url('img/pagi.png')";
-                        schedule.textContent = " Waktu Belajar & Amal Shalih";
-                    } else if (hour >= 12 && hour < 15) {
-                        header.style.backgroundImage = "url('img/pagi.png')";
-                        schedule.textContent = " Shalat Dzuhur & Istirahat";
-                    } else if (hour >= 15 && hour < 18) {
-                        header.style.backgroundImage = "url('img/pagi.png')";
-                        schedule.textContent = " Dzikir Petang & Asar";
-                    } else if (hour >= 18 && hour < 20) {
-                        header.style.backgroundImage = "url('img/pagi.png')";
-                        schedule.textContent = " Shalat Maghrib & Dzikir Malam";
-                    } else {
-                        header.style.backgroundImage = "url('img/malam.png')";
-                        schedule.textContent = " Istirahat & Qiyamul Lail";
-                    }
-
-                    header.style.backgroundSize = "cover";
-                    header.style.backgroundPosition = "center";
-                    header.style.transition = "background-image 1s ease-in-out";
-                }
-
-                updateTimeAndBackground();
-                setInterval(updateTimeAndBackground, 1000);
-            </script>
-        </div>
-        <section class="w-full flex justify-center">
-            <div class="w-full max-w-5xl px-6 py-12 text-center">
-                <h1 class="text-2xl font-bold text-center mb-10 text-white">
-                    waktu sholat
-                </h1>
-
-                <!-- Garis horizontal -->
-                <div class="relative flex justify-center items-center">
-                    <!-- Garis dasar -->
-                    <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-200 rounded-full transform -translate-y-1/2">
-                    </div>
-
-                    <!-- Garis progress -->
-                    <div id="progress"
-                        class="absolute top-1/2 left-0 h-1 bg-blue-500 rounded-full transform -translate-y-1/2 transition-all duration-700 w-0">
-                    </div>
-
-                    <!-- Titik & Nama Jadwal -->
-                    <div class="relative flex justify-between items-center w-full max-w-4xl flex-wrap">
-                        <div class="flex flex-col items-center">
-                            <div class="dot w-8 h-8 bg-blue-300 rounded-full border-4 border-white shadow-md"></div>
-                            <h3 id="time-subuh" class="mt-3 text-white text-lg font-light">Subuh</h3>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="dot w-8 h-8 bg-blue-300 rounded-full border-4 border-white shadow-md"></div>
-                            <h3 id="time-dzuhur" class="mt-3 text-white text-lg font-light">Dzuhur</h3>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="dot w-8 h-8 bg-blue-300 rounded-full border-4 border-white shadow-md"></div>
-                            <h3 id="time-ashar" class="mt-3 text-white text-lg font-light">Ashar</h3>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="dot w-8 h-8 bg-blue-300 rounded-full border-4 border-white shadow-md"></div>
-                            <h3 id="time-maghrib" class="mt-3 text-white text-lg font-light">Maghrib</h3>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="dot w-8 h-8 bg-blue-300 rounded-full border-4 border-white shadow-md"></div>
-                            <h3 id="time-isya" class="mt-3 text-white text-lg font-light">Isya</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <script>
-            function updateSholatTimeline() {
-                const now = new Date();
-                const hour = now.getHours();
-                const progress = document.getElementById("progress");
-
-                // Jadwal (posisi disesuaikan untuk garis horizontal)
-                const jadwal = [
-                    { id: "subuh", start: 4, end: 6, pos: 10 },
-                    { id: "dzuhur", start: 12, end: 15, pos: 35 },
-                    { id: "ashar", start: 15, end: 18, pos: 60 },
-                    { id: "maghrib", start: 18, end: 19, pos: 80 },
-                    { id: "isya", start: 19, end: 24, pos: 100 },
-                ];
-
-                // Reset semua
-                document.querySelectorAll(".dot").forEach(dot => dot.classList.remove("bg-blue-600"));
-                jadwal.forEach(j => {
-                    const el = document.getElementById(`time-${j.id}`);
-                    el.classList.remove("text-2xl", "font-bold", "text-blue-600");
-                    el.classList.add("text-gray-700", "text-lg", "font-light");
-                });
-
-                let aktif = "";
-                let lebar = 0;
-                for (const j of jadwal) {
-                    if (hour >= j.start && hour < j.end) {
-                        aktif = j.id;
-                        lebar = j.pos;
-                        break;
-                    }
-                    if (hour >= j.end) lebar = j.pos;
-                }
-
-                progress.style.width = `${lebar}%`;
-
-                // Ubah tampilan aktif
-                if (aktif) {
-                    const aktifEl = document.getElementById(`time-${aktif}`);
-                    aktifEl.classList.remove("text-lg", "font-light", "text-gray-700");
-                    aktifEl.classList.add("text-2xl", "font-bold", "text-blue-600", "transition-all", "duration-500");
-
-                    const aktifDot = aktifEl.previousElementSibling;
-                    aktifDot.classList.add("bg-blue-600");
-                }
-            }
-
-            updateSholatTimeline();
-            setInterval(updateSholatTimeline, 1000 * 60);
-        </script>
-
-    </header>
-
-<section class="">
+    <!-- <section class="">
     <div class="bg-white h-auto w-full shadow-2xl gap-5 flex justify-center py-3">
       <button class="flex flex-col items-center justify-center space-y-2">
   <div class="bg-emerald-500 rounded-full w-16 h-16 flex items-center justify-center shadow-md hover:bg-emerald-600 transition">
@@ -223,12 +56,143 @@
 </button>
 
     </div>
+</section> -->
+
+ 
+ <section class="relative py-20 px-4 overflow-hidden">
+
+  <!-- BACKGROUND GRADIENT -->
+  <div class="absolute inset-0 bg-gradient-to-br from-green-100 via-green-200 to-green-300 blur-2xl opacity-60"></div>
+
+  <!-- TITLE -->
+  <div class="relative max-w-4xl mx-auto text-center">
+    <h1 class="text-4xl font-extrabold text-green-700 drop-shadow-sm" id="salam">
+      Ada Yang Bisa Dibantu?
+    </h1>
+   <script>
+  const salamDiv = document.getElementById("salam");
+
+  function gantiSalam() {
+    // array kata-kata salam
+    const salamArray = [
+      "Assalamu'alaikum",
+      "Selamat datang di website kami",
+      "Halo, semoga harimu menyenangkan",
+      "Salam hangat untukmu",
+      "Semoga harimu penuh berkah"
+    ];
+
+    // pilih secara random
+    const randomIndex = Math.floor(Math.random() * salamArray.length);
+    salamDiv.textContent = salamArray[randomIndex];
+  }
+
+  // panggil fungsi saat halaman dimuat
+  window.onload = gantiSalam;
+</script>
+    <p class="text-gray-700 mt-2 text-lg">
+      Temukan fitur untuk membuat ibadah antum mudah di sini.
+    </p>
+  </div>
+
+  <!-- SEARCH BAR -->
+  <div class="relative max-w-3xl mx-auto mt-10">
+    <div class="flex items-center bg-white rounded-full shadow-xl px-3 py-4 border border-gray-200 gap-4">
+
+      <span class="text-3xl text-green-600">🔍</span>
+
+      <input 
+        id="searchInput"
+        type="text"
+        placeholder="Cari kajian, file, Tools..."
+        class="flex-1 bg-transparent outline-none text-lg text-gray-700"
+      />
+
+      <button 
+        onclick="searchKajian()"
+        class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-lg shadow">
+        Search
+      </button>
+    </div>
+  </div>
+
+  <!-- MENU LINGKARAN -->
+  <div class="relative mt-10 max-w-4xl mx-auto overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-200">
+
+    <div class="flex gap-6 min-w-max px-4 pb-4">
+
+      <!-- ITEM 1 -->
+      <div class="flex flex-col items-center">
+        <div class="w-20 h-20 rounded-full bg-white shadow-md flex justify-center items-center border border-green-300 hover:bg-green-500 hover:text-white transition text-3xl">
+          📁
+        </div>
+        <span class="mt-2 text-sm text-gray-700 font-semibold">File Anda</span>
+      </div>
+
+      <!-- ITEM 2 -->
+      <div class="flex flex-col items-center">
+        <div class="w-20 h-20 rounded-full bg-white shadow-md flex justify-center items-center border border-green-300 hover:bg-green-500 hover:text-white transition text-3xl">
+          📊
+        </div>
+        <span class="mt-2 text-sm text-gray-700 font-semibold">Dashboard</span>
+      </div>
+
+      <!-- ITEM 3 -->
+      <div class="flex flex-col items-center">
+        <div class="w-20 h-20 rounded-full bg-white shadow-md flex justify-center items-center border border-green-300 hover:bg-green-500 hover:text-white transition text-3xl">
+          🔥
+        </div>
+        <span class="mt-2 text-sm text-gray-700 font-semibold">Kajian Viral</span>
+      </div>
+
+      <!-- ITEM 4 -->
+      <div class="flex flex-col items-center">
+        <a href="sholat.html" class="w-20 h-20 rounded-full bg-white shadow-md flex justify-center items-center border border-green-300 hover:bg-green-500 hover:text-white transition text-3xl">
+          🕌
+        </a>
+        <span class="mt-2 text-sm text-gray-700 font-semibold">Waktu Sholat</span>
+      </div>
+
+      <!-- ITEM 5 -->
+      <div class="flex flex-col items-center">
+        <div class="w-20 h-20 rounded-full bg-white shadow-md flex justify-center items-center border border-green-300 hover:bg-green-500 hover:text-white transition text-3xl">
+          📿
+        </div>
+        <span class="mt-2 text-sm text-gray-700 font-semibold">Dzikir</span>
+      </div>
+
+      <!-- ITEM 5 -->
+      <div class="flex flex-col items-center">
+        <div class="w-20 h-20 rounded-full bg-white shadow-md flex justify-center items-center border border-green-300 hover:bg-green-500 hover:text-white transition text-3xl">
+          📿
+        </div>
+        <span class="mt-2 text-sm text-gray-700 font-semibold">Dzikir</span>
+      </div>
+
+      <!-- ITEM 5 -->
+      <div class="flex flex-col items-center">
+        <div class="w-20 h-20 rounded-full bg-white shadow-md flex justify-center items-center border border-green-300 hover:bg-green-500 hover:text-white transition text-3xl">
+          📿
+        </div>
+        <span class="mt-2 text-sm text-gray-700 font-semibold">Dzikir</span>
+      </div>
+
+      <!-- ITEM 5 -->
+      <div class="flex flex-col items-center">
+        <div class="w-20 h-20 rounded-full bg-white shadow-md flex justify-center items-center border border-green-300 hover:bg-green-500 hover:text-white transition text-3xl">
+          📿
+        </div>
+        <span class="mt-2 text-sm text-gray-700 font-semibold">Dzikir</span>
+      </div>
+
+    </div>
+  </div>
+
 </section>
 
 
 
 
-    
 </body>
 
 </html>
