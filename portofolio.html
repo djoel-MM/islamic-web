@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./src/output.css" rel="stylesheet">
+</head>
+<body>
+  <div id="switch" class="relative w-48 h-12 bg-gray-200 rounded-full flex items-center px-2 cursor-pointer select-none">
+  
+  <!-- Slider / indikator -->
+  <div id="slider" class="absolute w-20 h-8 bg-black rounded-full transition-all duration-300"></div>
+
+  <!-- Option 1 -->
+  <div id="option1" class="flex-1 text-center z-10 text-sm font-medium text-black">
+    Fitur A
+  </div>
+
+  <!-- Option 2 -->
+  <div id="option2" class="flex-1 text-center z-10 text-sm font-medium text-black">
+    Fitur B
+  </div>
+
+</div>
+
+<script>
+  const slider = document.getElementById('slider');
+  const option1 = document.getElementById('option1');
+  const option2 = document.getElementById('option2');
+
+  option1.onclick = () => {
+    slider.style.transform = "translateX(0px)";
+  };
+
+  option2.onclick = () => {
+    slider.style.transform = "translateX(88px)";
+  };
+</script>
+
+    
+</body>
+</html>

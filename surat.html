@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="src/output.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header"></div>
+    <div id="ayat"> </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.href)
+        const res = get.params('s');
+
+        const fetchsurat = async () =>{
+            try { 
+                const res = await fetch (`https://equran.id/api/v2/surat/${nomor}`);
+                const  data = await  res.json();
+                const surat = data.data;
+
+                document.getElementById('header').innerHTML =`
+          <div class="p-4 bg-white rounded-xl shadow-md border">
+            <div class="text-2xl font-bold">${surat.namaLatin} (${surat.nama})</div>
+            <div class="text-gray-600">${surat.arti} • ${surat.jumlahAyat} ayat</div>
+          </div>
+        `;
+        const ayatContainer = document.getElementById("ayat");
+        surat.ayat.forEach(a => {
+          const div = document.createElement("div");
+          div.className = "p-4 bg-white rounded-xl shadow border";
+
+          div.innerHTML = `
+            <div class="flex justify-between items-start">
+              <div class="text-gray-600 text-sm">Ayat ${a.nomorAyat}</div>
+              <div class="font-arabic text-3xl leading-relaxed text-gray-800">${a.teksArab}</div>
+            </div>
+            <div class="text-gray-700 mt-2">${a.teksLatin}</div>
+            <div class="text-gray-500 text-sm mt-1">${a.teksIndonesia}</div>
+          `;
+
+          ayatContainer.appendChild(div);
+          });
+
+            }
+            catch(e){
+                console.log('error bang')
+            }
+
+            fetchsurat()
+        }
+    </script>
+</body>
+</html>

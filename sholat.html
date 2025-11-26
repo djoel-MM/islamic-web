@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="src/output.css" rel="stylesheet">
 </head>
+
 <body>
-    
+
     <header class="relative w-full h-150 bg-cover bg-center flex-none p-2" id="background">
         <nav class="flex justify-center">
             <div class="  flex justify-center gap-8 p-6">
@@ -21,7 +23,7 @@
                 </button>
             </div>
         </nav>
-        <div class="flex justify-between">
+        <div class="flex justify-center">
             <div class=" z-10  bg-white/20 py-4 rounded-2xl shadow-lg backdrop-blur-md w-110 flex flex-col ">
                 <span id="current-time" class="text-8xl font-light text-center  ">. : : </span>
                 <article class="font-medium text-4xl text-center">jadwal :</article>
@@ -31,148 +33,231 @@
 
             </div>
 
-            <script>
-
-                function updateTimeAndBackground() {
-                    const now = new Date();
-                    const hour = now.getHours();
-
-                    // update waktu
-                    const hours = String(hour).padStart(2, '0');
-                    const minutes = String(now.getMinutes()).padStart(2, '0');
-                    const seconds = String(now.getSeconds()).padStart(2, '0');
-                    document.getElementById("current-time").textContent = `${hours}:${minutes}:${seconds}`;
-
-                    // ambil elemen header
-                    const header = document.getElementById("background");
-                    const schedule = document.getElementById("shecedule");
-
-                    // ganti background + teks sesuai waktu
-                    if (hour >= 4 && hour < 6) {
-                        header.style.backgroundImage = "url('img/pagi.png')";
-                        schedule.textContent = " Dzikir Pagi";
-                    } else if (hour >= 6 && hour < 12) {
-                        header.style.backgroundImage = "url('img/pagi.png')";
-                        schedule.textContent = " Waktu Belajar & Amal Shalih";
-                    } else if (hour >= 12 && hour < 15) {
-                        header.style.backgroundImage = "url('img/pagi.png')";
-                        schedule.textContent = " Shalat Dzuhur & Istirahat";
-                    } else if (hour >= 15 && hour < 18) {
-                        header.style.backgroundImage = "url('img/pagi.png')";
-                        schedule.textContent = " Dzikir Petang & Asar";
-                    } else if (hour >= 18 && hour < 20) {
-                        header.style.backgroundImage = "url('img/pagi.png')";
-                        schedule.textContent = " Shalat Maghrib & Dzikir Malam";
-                    } else {
-                        header.style.backgroundImage = "url('img/malam.png')";
-                        schedule.textContent = " Istirahat & Qiyamul Lail";
-                    }
-
-                    header.style.backgroundSize = "cover";
-                    header.style.backgroundPosition = "center";
-                    header.style.transition = "background-image 1s ease-in-out";
-                }
-
-                updateTimeAndBackground();
-                setInterval(updateTimeAndBackground, 1000);
-            </script>
         </div>
-        <section class="w-full flex justify-center">
-            <div class="w-full max-w-5xl px-6 py-12 text-center">
-                <h1 class="text-2xl font-bold text-center mb-10 text-white">
-                    waktu sholat
-                </h1>
-
-                <!-- Garis horizontal -->
-                <div class="relative flex justify-center items-center">
-                    <!-- Garis dasar -->
-                    <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-200 rounded-full transform -translate-y-1/2">
-                    </div>
-
-                    <!-- Garis progress -->
-                    <div id="progress"
-                        class="absolute top-1/2 left-0 h-1 bg-blue-500 rounded-full transform -translate-y-1/2 transition-all duration-700 w-0">
-                    </div>
-
-                    <!-- Titik & Nama Jadwal -->
-                    <div class="relative flex justify-between items-center w-full max-w-4xl flex-wrap">
-                        <div class="flex flex-col items-center">
-                            <div class="dot w-8 h-8 bg-blue-300 rounded-full border-4 border-white shadow-md"></div>
-                            <h3 id="time-subuh" class="mt-3 text-white text-lg font-light">Subuh</h3>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="dot w-8 h-8 bg-blue-300 rounded-full border-4 border-white shadow-md"></div>
-                            <h3 id="time-dzuhur" class="mt-3 text-white text-lg font-light">Dzuhur</h3>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="dot w-8 h-8 bg-blue-300 rounded-full border-4 border-white shadow-md"></div>
-                            <h3 id="time-ashar" class="mt-3 text-white text-lg font-light">Ashar</h3>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="dot w-8 h-8 bg-blue-300 rounded-full border-4 border-white shadow-md"></div>
-                            <h3 id="time-maghrib" class="mt-3 text-white text-lg font-light">Maghrib</h3>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="dot w-8 h-8 bg-blue-300 rounded-full border-4 border-white shadow-md"></div>
-                            <h3 id="time-isya" class="mt-3 text-white text-lg font-light">Isya</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
 
         <script>
-            function updateSholatTimeline() {
+
+            function updateTimeAndBackground() {
                 const now = new Date();
                 const hour = now.getHours();
-                const progress = document.getElementById("progress");
 
-                // Jadwal (posisi disesuaikan untuk garis horizontal)
-                const jadwal = [
-                    { id: "subuh", start: 4, end: 6, pos: 10 },
-                    { id: "dzuhur", start: 12, end: 15, pos: 35 },
-                    { id: "ashar", start: 15, end: 18, pos: 60 },
-                    { id: "maghrib", start: 18, end: 19, pos: 80 },
-                    { id: "isya", start: 19, end: 24, pos: 100 },
-                ];
+                // update waktu
+                const hours = String(hour).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById("current-time").textContent = `${hours}:${minutes}:${seconds}`;
 
-                // Reset semua
-                document.querySelectorAll(".dot").forEach(dot => dot.classList.remove("bg-blue-600"));
-                jadwal.forEach(j => {
-                    const el = document.getElementById(`time-${j.id}`);
-                    el.classList.remove("text-2xl", "font-bold", "text-blue-600");
-                    el.classList.add("text-gray-700", "text-lg", "font-light");
-                });
+                // ambil elemen header
+                const header = document.getElementById("background");
+                const schedule = document.getElementById("shecedule");
 
-                let aktif = "";
-                let lebar = 0;
-                for (const j of jadwal) {
-                    if (hour >= j.start && hour < j.end) {
-                        aktif = j.id;
-                        lebar = j.pos;
-                        break;
-                    }
-                    if (hour >= j.end) lebar = j.pos;
+                // ganti background + teks sesuai waktu
+                if (hour >= 4 && hour < 6) {
+                    header.style.backgroundImage = "url('img/pagi.png')";
+                    schedule.textContent = " Dzikir Pagi";
+                } else if (hour >= 6 && hour < 12) {
+                    header.style.backgroundImage = "url('img/pagi.png')";
+                    schedule.textContent = " Waktu Belajar & Amal Shalih";
+                } else if (hour >= 12 && hour < 15) {
+                    header.style.backgroundImage = "url('img/pagi.png')";
+                    schedule.textContent = " Shalat Dzuhur & Istirahat";
+                } else if (hour >= 15 && hour < 18) {
+                    header.style.backgroundImage = "url('img/pagi.png')";
+                    schedule.textContent = " Dzikir Petang & Asar";
+                } else if (hour >= 18 && hour < 20) {
+                    header.style.backgroundImage = "url('img/pagi.png')";
+                    schedule.textContent = " Shalat Maghrib & Dzikir Malam";
+                } else {
+                    header.style.backgroundImage = "url('img/malam.png')";
+                    schedule.textContent = " Istirahat & Qiyamul Lail";
                 }
 
-                progress.style.width = `${lebar}%`;
-
-                // Ubah tampilan aktif
-                if (aktif) {
-                    const aktifEl = document.getElementById(`time-${aktif}`);
-                    aktifEl.classList.remove("text-lg", "font-light", "text-gray-700");
-                    aktifEl.classList.add("text-2xl", "font-bold", "text-blue-600", "transition-all", "duration-500");
-
-                    const aktifDot = aktifEl.previousElementSibling;
-                    aktifDot.classList.add("bg-blue-600");
-                }
+                header.style.backgroundSize = "cover";
+                header.style.backgroundPosition = "center";
+                header.style.transition = "background-image 1s ease-in-out";
             }
 
-            updateSholatTimeline();
-            setInterval(updateSholatTimeline, 1000 * 60);
+            updateTimeAndBackground();
+            setInterval(updateTimeAndBackground, 1000);
         </script>
 
+
+        <section class="flex flex-col items-center mt-10 gap-6">
+
+    <!-- INFO -->
+    <div class="text-center">
+        <h2 id="status" class="text-xl text-white font-light"></h2>
+        <p id="countdown" class="text-white mt-1"></p>
+    </div>
+
+    <!-- TIMELINE PROGRESS BAR -->
+    <div class="w-full h-7 bg-amber-50 px-2 py-1 rounded-2xl">
+        <div id="timeline" class="h-full bg-blue-500 w-0 transition-all duration-500 rounded-2xl"></div>
+    </div>
+
+    <!-- DOTS -->
+    <div class="relative flex justify-between items-center w-full">
+
+        <div class="flex flex-col items-center gap-2">
+            <div class="dot w-7 h-7 rounded-full bg-blue-300 border-4 border-white shadow-md transition-all duration-300"></div>
+            <h3 id="time-subuh" class="label text-white text-sm">Subuh</h3>
+        </div>
+
+        <div class="flex flex-col items-center gap-2">
+            <div class="dot w-7 h-7 rounded-full bg-blue-300 border-4 border-white shadow-md transition-all duration-300"></div>
+            <h3 id="time-dzuhur" class="label text-white text-sm">Dzuhur</h3>
+        </div>
+
+        <div class="flex flex-col items-center gap-2">
+            <div class="dot w-7 h-7 rounded-full bg-blue-300 border-4 border-white shadow-md transition-all duration-300"></div>
+            <h3 id="time-ashar" class="label text-white text-sm">Ashar</h3>
+        </div>
+
+        <div class="flex flex-col items-center gap-2">
+            <div class="dot w-7 h-7 rounded-full bg-blue-300 border-4 border-white shadow-md transition-all duration-300"></div>
+            <h3 id="time-maghrib" class="label text-white text-sm">Maghrib</h3>
+        </div>
+
+        <div class="flex flex-col items-center gap-2">
+            <div class="dot w-7 h-7 rounded-full bg-blue-300 border-4 border-white shadow-md transition-all duration-300"></div>
+            <h3 id="time-isya" class="label text-white text-sm">Isya</h3>
+        </div>
+
+    </div>
+
+</section>
+
+        <script>
+        let jadwalAPI = {};
+
+async function loadJadwal() {
+    const res = await fetch(
+        "https://api.aladhan.com/v1/timingsByCity?city=Jakarta&country=Indonesia&method=2"
+    );
+    const data = await res.json();
+    const t = data.data.timings;
+
+    jadwalAPI = {
+        subuh: t.Fajr,
+        dzuhur: t.Dhuhr,
+        ashar: t.Asr,
+        maghrib: t.Maghrib,
+        isya: t.Isha
+    };
+
+    document.getElementById("time-subuh").textContent = `Subuh ${t.Fajr}`;
+    document.getElementById("time-dzuhur").textContent = `Dzuhur ${t.Dhuhr}`;
+    document.getElementById("time-ashar").textContent = `Ashar ${t.Asr}`;
+    document.getElementById("time-maghrib").textContent = `Maghrib ${t.Maghrib}`;
+    document.getElementById("time-isya").textContent = `Isya ${t.Isha}`;
+}
+
+function toSec(str) {
+    const [h, m] = str.split(":").map(Number);
+    return h * 3600 + m * 60;
+}
+
+function updateTimeline() {
+    if (!jadwalAPI.subuh) return; // API belum masuk
+
+    const now = new Date();
+    const nowSec = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+
+    const posisi = {
+        subuh: 10,
+        dzuhur: 35,
+        ashar: 60,
+        maghrib: 80,
+        isya: 100
+    };
+
+    const jadwal = [
+        { id: "subuh", start: toSec(jadwalAPI.subuh), pos: 10 },
+        { id: "dzuhur", start: toSec(jadwalAPI.dzuhur), pos: 35 },
+        { id: "ashar", start: toSec(jadwalAPI.ashar), pos: 60 },
+        { id: "maghrib", start: toSec(jadwalAPI.maghrib), pos: 80 },
+        { id: "isya", start: toSec(jadwalAPI.isya), pos: 100 }
+    ];
+
+    // Tambahkan end = waktu selanjutnya
+    for (let i = 0; i < jadwal.length - 1; i++) {
+        jadwal[i].end = jadwal[i + 1].start;
+    }
+    jadwal[jadwal.length - 1].end = 24 * 3600; // isya
+
+    // RESET semua dot & label
+    document.querySelectorAll(".dot").forEach(e => e.classList.remove("active"));
+    document.querySelectorAll(".label").forEach(e => e.classList.remove("active"));
+
+    let progress = 0;
+    let active = "";
+    let nextSholat = "";
+    let nextTime = 0;
+
+    for (let i = 0; i < jadwal.length; i++) {
+        const j = jadwal[i];
+
+        if (nowSec >= j.start && nowSec < j.end) {
+            active = j.id;
+
+            const percentage = (nowSec - j.start) / (j.end - j.start);
+            progress = percentage * (j.pos - (i === 0 ? 0 : jadwal[i - 1].pos))
+                     + (i === 0 ? 0 : jadwal[i - 1].pos);
+
+            nextSholat = jadwal[i + 1] ? jadwal[i + 1].id : "subuh";
+            nextTime = jadwal[i + 1] ? jadwal[i + 1].start : toSec(jadwalAPI.subuh) + 86400;
+            break;
+        }
+        if (nowSec >= j.end) progress = j.pos;
+    }
+
+    document.getElementById("timeline").style.width = `${progress}%`;
+
+    if (active) {
+        const label = document.getElementById(`time-${active}`);
+        label.classList.add("active");
+
+        const dot = label.previousElementSibling;
+        dot.classList.add("active");
+
+        document.getElementById("status").textContent = `Sekarang waktu ${active}`;
+    }
+
+    // COUNTDOWN
+    const sisa = nextTime - nowSec;
+    const h = Math.floor(sisa / 3600);
+    const m = Math.floor((sisa % 3600) / 60);
+    const ss = sisa % 60;
+
+    document.getElementById("countdown").textContent =
+        `Menuju ${nextSholat}: ${h}j ${m}m ${ss}d`;
+}
+
+(async () => {
+    await loadJadwal();
+    updateTimeline();
+    setInterval(updateTimeline, 1000);
+})();
+
+</script>
     </header>
+    <section class="flex gap-5 justify-center">
+        <div class="bg-green-50 rounded-3xl w-full lg:w-80 h-32 p-5 shadow-md hover:shadow-lg transition">
+        <h3 class="font-semibold text-green-700 mb-2">tata cara sholat</h3>
+        <p class="text-gray-700 text-sm">
+          Setiap ibadah dimulai dari hati yang lurus dan niat karena Allah semata.
+        </p>
+      </div>
+
+      <div class="bg-green-50 rounded-3xl w-full lg:w-80 h-32 p-5 shadow-md hover:shadow-lg transition">
+        <h3 class="font-semibold text-green-700 mb-2">PDF. Hiznul muslim</h3>
+        <p class="text-gray-700 text-sm">
+         menambah pengetahuan tentang doa doa nabi, membuat hidup berkah dan bermakna
+        </p>
+      </div>
+    </section>
+
+
 </body>
+
 </html>

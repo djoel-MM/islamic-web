@@ -34,67 +34,70 @@
     </svg>
   </a>
 
+<script>
+  const API_KEY = "AIzaSyD1ZZmUKVhxLP_4Pl-b41JdgJwM4QFRJY0";
 
-  <script>
-    const API_KEY = "AIzaSyD1ZZmUKVhxLP_4Pl-b41JdgJwM4QFRJY0"; // ganti dengan API key kamu
+  async function searchKajian() {
+    const query = document.getElementById("searchInput").value;
+    const resultsDiv = document.getElementById("results");
 
-    async function searchKajian() {
-      const query = document.getElementById("searchInput").value;
-      const resultsDiv = document.getElementById("results");
+    if (!query.trim()) {
+      alert("Masukkan kata kunci pencarian.");
+      return;
+    }
 
-      if (!query) {
-        alert("Masukkan kata kunci pencarian.");
+    resultsDiv.innerHTML = `
+      <div class="col-span-full text-center text-gray-500">Loading...</div>
+    `;
+
+    try {
+      const res = await fetch(
+        `https://api.zahirrr.com/ytsearch?query=${encodeURIComponent(query)}`
+      );
+
+      const data = await res.json();
+      resultsDiv.innerHTML = "";
+
+      if (!data.items || data.items.length === 0) {
+        resultsDiv.innerHTML =
+          `<p class="col-span-full text-center text-gray-500">Tidak ada hasil ditemukan.</p>`;
         return;
       }
 
+      data.items.forEach((video) => {
+        const vid = video.videoId;
+        const title = video.title;
+        const thumb = video.thumbnail;
+
+        const card = `
+          <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-4">
+            <img src="${thumb}" class="rounded-lg w-full h-48 object-cover" />
+
+            <h2 class="mt-3 font-bold text-gray-800 text-lg line-clamp-2">
+              ${title}
+            </h2>
+
+            <a href="https://www.youtube.com/watch?v=${vid}" target="_blank">
+              <button class="w-full mt-4 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
+                Watch
+              </button>
+            </a>
+          </div>
+        `;
+
+        resultsDiv.innerHTML += card;
+      });
+
+    } catch (error) {
       resultsDiv.innerHTML = `
-    <div class="col-span-full text-center text-gray-500">Loading...</div>
-  `;
-
-      try {
-        const res = await fetch(
-          `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&part=snippet&type=video&maxResults=12&q=${encodeURIComponent(
-            query + "kajian sunnah"
-          )}`
-        );
-
-        const data = await res.json();
-        resultsDiv.innerHTML = "";
-
-        if (!data.items || data.items.length === 0) {
-          resultsDiv.innerHTML =
-            `<p class="col-span-full text-center text-gray-500">Tidak ada hasil ditemukan.</p>`;
-          return;
-        }
-
-        data.items.forEach((video) => {
-          const vid = video.id.videoId;
-          const title = video.snippet.title;
-          const thumb = video.snippet.thumbnails.high.url;
-
-          const card = `
-        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-4">
-          <img src="${thumb}" class="rounded-lg w-full h-48 object-cover" />
-
-          <h2 class="mt-3 font-bold text-gray-800 text-lg line-clamp-2">
-            ${title}
-          </h2>
-
-          <a href="https://www.youtube.com/watch?v=${vid}" target="_blank">
-            <button class="w-full mt-4 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
-              Watch
-            </button>
-          </a>
-        </div>
+        <p class="col-span-full text-red-600 text-center">
+          Terjadi kesalahan: ${error}
+        </p>
       `;
-
-          resultsDiv.innerHTML += card;
-        });
-      } catch (error) {
-        resultsDiv.innerHTML = `<p class="col-span-full text-red-600 text-center">Terjadi kesalahan: ${error}</p>`;
-      }
     }
-  </script>
+  }
+</script>
+
 
 </body>
 
