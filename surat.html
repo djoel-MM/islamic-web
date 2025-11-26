@@ -9,6 +9,13 @@
 <body>
     <div id="header" class=""></div>
     <div id="ayat" class="mt-4 space-y-4"> </div>
+    <a href="index.html" class="fixed bottom-5 left-10 z-50
+         rounded-full bg-white p-5 shadow hover:shadow-2xl transition 
+         flex items-center justify-center border border-gray-200">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </a>
 
     <script>
         const params = new URLSearchParams(window.location.search)
@@ -31,13 +38,15 @@
         </div>
         <div class="text-lg opacity-90 mt-1">${surat.arti}</div>
       </div>
-
+<div>
       <div class="text-5xl font-arabic drop-shadow-sm">
         ${surat.nama}
       </div>
-    </div>
+    
+   </div>   
+     </div>
 
-    <div class="mt-4 text-sm opacity-90">
+     <div class="mt-4 text-sm opacity-90">
       Jumlah Ayat: ${surat.jumlahAyat}
     </div>
   </div>
